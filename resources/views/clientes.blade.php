@@ -1,5 +1,46 @@
 @extends('dashboard', ['titulo'=>'clientes','active'=>'clientes'])
 @section('dashboard')
+<?php 
+class idade{
+	public $nascimento;
+
+	function __construct($nascimento){
+		$this->nascimento=$nascimento;
+	}
+
+	public function calculo_idade() {
+	    //Data atual
+	    $dia = date('dd');
+	    $mes = date('mm');
+	    $ano = date('Y');
+	    //Data do aniversário
+	    $nascimento = explode('-', $this->nascimento);
+		
+		$anonasc = ($nascimento[0]);
+	    $dianasc = ($nascimento[1]);
+	    $mesnasc = ($nascimento[2]);
+		
+	    //Calculando sua idade
+	    $idade = $ano - $anonasc; // simples, ano -  nascimento!
+	    if ($mes < $mesnasc) // se o mes é menor, só subtrair da idade
+	    {
+	        $idade--;
+	        return $idade;
+	    }
+	    elseif ($mes == $mesnasc && $dia <= $dianasc) // se esta no mes do aniversario mas não passou ou chegou a data, subtrai da idade
+	    {
+	        $idade--;
+	        return $idade;
+	    }
+	    else // ja fez aniversario no ano, tudo certo!
+	    {
+	        return $idade;
+	    }
+	}
+}
+?>
+
+
 	<h2>Clientes</h2>
 	<br>
 	<div class="card">
@@ -24,8 +65,9 @@
 		</thead>
 	@foreach($clientes as $cliente)
 			<tr>
+				<?php $nascimento = new idade($cliente->nascimento); ?>
 				<td><b>{{ucfirst($cliente->nome)}}</b></td>
-				<td>{{$cliente->idade}}</td>
+				<td>{{$nascimento->calculo_idade()}}</td>
 				<td>{{$cliente->telefone}}</td>
 				<td>{{$cliente->miop}}</td>
 				<td>{{$cliente->asti}}</td>

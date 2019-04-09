@@ -15,9 +15,12 @@ use Illuminate\Support\Facades\DB;
 use App\Modelo;
 use App\Compra;
 use App\Cliente;
+use App\Endereco;
 
 
 Route::get('/dashboard','ControleEstoque@dashboardView')->name('pagina.geral');
+Route::post('/dashboard','ControleEstoque@dashboardWithTime')->name('pagina.geral.set');
+
 Route::get('/vendas','ControleEstoque@getVendas')->name('pagina.vendas');
 Route::get('/modelos','ControleEstoque@getModelos')->name('pagina.modelos');
 Route::get('/clientes','ControleEstoque@getClientes')->name('pagina.clientes');
@@ -56,10 +59,12 @@ Route::post('/rmestoque', 'ControleEstoque@rmEstoque');
 Route::get('/excluircliente/{id}',function($id){
 	if($cliente=Cliente::find($id)){
 		$compras=Compra::where('cliente_id',$id)->get();
-
+		$endereco=Endereco::where('user_id',$id)->get()->first();
+		
+		$endereco->delete();
 		if(count($compras)>0)	$compras->each->delete();
-
 		$cliente->delete();
+
 	}
 	return redirect('/clientes');
 });

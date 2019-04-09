@@ -4,7 +4,28 @@
 	@section('dashboard')
 	<h2>Dashboard</h2>
 	<div class='alert alert-primary'>Bem vindo de volta</div>
-	
+
+
+	<div class='w-50 card' style='margin:auto;'>
+		
+		<form action='{{route("pagina.geral.set")}}' method='post'>
+			<legend>Seleção por periodo</legend>
+			{{ csrf_field() }}
+			<label>
+				inicio
+				<input type="date" name="data" class='form-control'>
+			</label>
+
+			<label>
+				fim
+				<input type="date" name="data1" class='form-control'>
+			</label>
+
+			<input type="hidden" name="_method" value="post">
+			<input type="submit" name="" value='mostrar'>
+		</form>
+	</div>
+
 
 	@if(count($compras)>0 && count($modelos)>0)
 	<div class='w-50' style='margin:auto; text-align:center'>	
@@ -100,4 +121,12 @@
 	@if(count($clientes)==0 || count($modelos)==0) 	disabled	@endif
 	>Cadastrar Venda</a>
 
+	<style type="text/css">
+		.card{
+			font-size:12pt;
+		}
+		.badge{
+			font-size:12pt;
+		}
+	</style>
 	@endSection

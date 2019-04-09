@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Compra;
 use App\Modelo;
 use App\Cliente;
@@ -16,7 +17,25 @@ class ControleEstoque extends Controller
     	$clientes=Cliente::all();
 
     	return view('visaogeral',compact('compras','modelos','clientes'));
+    }
 
+    public function dashboardWithTime(Request $request){
+        $date   =  $request->input('data')." 00:00:01";
+        $date1  =  $request->input('data1')." 23:59:59";
+
+        $compras=DB::table('compras')
+        ->whereBetween('created_at',[$date,$date1])
+            ->get();
+
+        $clientes=DB::table('clientes')
+            ->whereBetween('created_at',[$date,$date1])
+                ->get();
+
+        $modelos=DB::table('modelos')
+            ->whereBetween('created_at',[$date,$date1])
+                ->get();
+                
+        return view('visaogeral',compact('compras','modelos','clientes'));
     }
 
     public function cadastrarCliente(Request $request){
@@ -26,8 +45,8 @@ class ControleEstoque extends Controller
         ]);
 
         $cliente = new Cliente();
-        $cliente->nome=     $request->input('nome');
-        $cliente->nascimento=    $request->input('nascimento');
+        $cliente->nome=         $request->input('nome');
+        $cliente->nascimento=   $request->input('nascimento');
         
         $cliente->nd_consta=    $request->input('nd_consta');
         

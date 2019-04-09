@@ -39,9 +39,9 @@
 	    	<td><b>{{ucfirst($compra->cliente)}}<b></td>
 	    	<td >R${{$compra->custo}}</td>			
 	    	<td >R${{$compra->preco}}</td>		
-	    <td> <span class='badge badge-success'>R${{($compra->preco-$compra->custo)}}</span></td>
+	    <td> <span>R${{($compra->preco-$compra->custo)}}</span></td>
 
-	    <td><span class="badge badge-secundary">{{ date('d/m/Y',strtotime($compra->created_at)) }} </span></td>
+	    <td><span>{{ date('d/m/Y',strtotime($compra->created_at)) }} </span></td>
 				<td>
 				<button class='btn btn-danger btn-sm' onclick='remove({{$compra->id}})'>	
 					<img src="images/svg/trashcan.svg">
