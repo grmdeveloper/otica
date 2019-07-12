@@ -1,12 +1,10 @@
 	<nav id='navbar' class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand rounded" style='background-color:rgba(255,255,255,.9)'>
-    <img src="{{asset('images/logo.png')}}" width='100'>
+   <!--  <img src="{{asset('images/logo.png')}}" width='100'> -->
+   <span style='padding:15px;' >Ótica <b>Nome</b></span>
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div class=" navbar-collapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item @if($active=='visaoGeral') active @endif ">
         <a class="nav-link" href="{{route('pagina.geral')}}">Visao Geral</a>
@@ -20,5 +18,6 @@
       <li class="nav-item @if($active=='vendas') active @endif ">
         <a class="nav-link" href="{{route('pagina.vendas')}}">Vendas</a>
       </li>
+      <
   </div>
 </nav>

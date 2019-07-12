@@ -19,6 +19,8 @@ class CreateComprasTable extends Migration
             $table->float('custo');
             $table->float('preco');
             $table->float('lucro');
+            $table->string('pagamento');
+            $table->integer('parcelas');
             $table->timestamps();
         });
     }

@@ -9,7 +9,8 @@
 	<canvas class='line-chart'></canvas>
 </body>
 	<script type="text/javascript">
-		var ctx= document.getElementsByClassName("line-chart");
+	
+	var ctx= document.getElementsByClassName("line-chart");
 
 	var chartGraph = new Chart(ctx,{
 		type:'line',

@@ -1,7 +1,7 @@
 @extends('dashboard', ['titulo'=>'clientes','active'=>'clientes'])
 @section('dashboard')
 <?php 
-class idade{
+/*class idade{
 	public $nascimento;
 
 	function __construct($nascimento){
@@ -16,9 +16,9 @@ class idade{
 	    //Data do aniversário
 	    $nascimento = explode('-', $this->nascimento);
 		
-		$anonasc = ($nascimento[0]);
-	    $dianasc = ($nascimento[1]);
-	    $mesnasc = ($nascimento[2]);
+		$anonasc = $nascimento[0];
+	    $dianasc = $nascimento[1];
+	    $mesnasc = $nascimento[2];
 		
 	    //Calculando sua idade
 	    $idade = $ano - $anonasc; // simples, ano -  nascimento!
@@ -37,7 +37,7 @@ class idade{
 	        return $idade;
 	    }
 	}
-}
+}*/
 ?>
 
 
@@ -54,7 +54,7 @@ class idade{
 		<thead>
 			<tr>
 				<th>Nome</th>
-				<th>Idade</th>
+				<th>Nascimento</th>
 				<th>Telefone</th>
 				<th>Miopia e/d</th>
 				<th>Astigmatismo e/d</th>
@@ -65,9 +65,9 @@ class idade{
 		</thead>
 	@foreach($clientes as $cliente)
 			<tr>
-				<?php $nascimento = new idade($cliente->nascimento); ?>
+
 				<td><b>{{ucfirst($cliente->nome)}}</b></td>
-				<td>{{$nascimento->calculo_idade()}}</td>
+				<td>{{date('d/m/y',strtotime($cliente->nascimento))}}</td>
 				<td>{{$cliente->telefone}}</td>
 				<td>{{$cliente->miop}}</td>
 				<td>{{$cliente->asti}}</td>
@@ -75,6 +75,9 @@ class idade{
 				<td>{{$cliente->pres}}</td>
 
 			<td>	
+				<button class='btn btn-primary btn-sm' onclick='view({{$cliente->id}})'>	
+					<img src="{{asset('images/svg/eye.svg')}}">
+				</button>			
 				<button class='btn btn-primary btn-sm' onclick='edit({{$cliente->id}})'>	
 					<img src="{{asset('images/svg/pencil.svg')}}">
 				</button>
@@ -99,6 +102,11 @@ class idade{
 		
 	</span>
 
+<div class='cliente-view card w-50 shadow-sm' style='margin:20px auto; font-size:12pt; font-family:vedana;'>
+</div>
+<div class='cliente-data card w-50 shadow-sm' style='margin:20px auto; font-size:12pt; font-family:vedana;'>
+</div>
+
 
 <link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
 <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
@@ -107,10 +115,49 @@ class idade{
 	var confirmRemove= function($id){
 		$('.confirmRequest').html("Todas as vendas feitas a esse cliente serão excluidas, deseja prosseguir? <a href='#' onclick='remove("+$id+")' class='btn btn-sm btn-success'> confirmar </a> <a href='#' onclick='location.reload()' class='btn btn-sm btn-danger'>cancelar</a>").css('display','block');
 	}
-	var edit= 		function($id){
+	
+	var view = 		function($id){
+		$.ajax({
+			url:'vercliente/'+$id,
+			success:function(data){
+				let dados = "<legend>Cliente</legend>";
+				dados+="Nome: "+data.nome;
+				dados+="<br>Nascimento: "+data.nascimento;
+				
+				dados+="<hr>";
+				dados+="<br>nada consta: "+data.nd_consta;
+				dados+="<br><br><br>tso: "+data.tso;
+				dados+="<br>data: "+data.tso_date;
+				
+				dados+="<hr>";
+				dados+="<br><br><br>telefone: "+data.telefone;
+				
+				dados+="<hr>";
+				dados+="<br><br><br>rg: "+data.rg;
+				dados+="<br>orgao emissor: "+data.orgao;
+				dados+="<br>cpf: "+data.cpf;
+				
+				dados+="<hr>";
+				dados+="<br><br>telefone parente: "+data.telefone1;
+				dados+="<br>nome: "+data.contato1;
+				
+				dados+="<hr>";
+				dados+="<br><br>observacoes: "+data.observacoes;
+				dados+="<hr>";
+
+				$('.cliente-view').html(dados);
+				$('.cliente-data').html(data.created_at);
+
+				$('body, html').animate({
+					scrollTop:$('.cliente-view').offset().top,
+				},'slow');
+			}
+		});
+	}
+	var edit = 		function($id){
 		location.href='editarcliente/'+$id;
 	}
-	var remove= 	function($id){
+	var remove = 	function($id){
 		location.href='excluircliente/'+$id;
 	}
 

@@ -85,7 +85,11 @@
 		<br><br>
 
 	<div class="form-group">
-
+	@if($errors->any())
+		@foreach($errors->all() as $error)
+			<div class='alert alert-danger'>{{$error}}</div>
+		@endforeach
+	@endif
 		<fieldset>
 			<legend>informações pessoais</legend>
 			
@@ -272,10 +276,9 @@
 
 		<label>
 			Observações
-			<input type='text' name='observacoes' @if(isset($cliente)) value='{{$cliente->observacoes}}' @endif width='80%'>
+			<input type='text' name='observacoes' @if(isset($cliente)) value='{{$cliente->observacoes}}' @endif size=80>
 		</label>
 	</div>
-
 	@if($errors->any())
 		@foreach($errors->all() as $error)
 			<div class='alert alert-danger'>{{$error}}</div>

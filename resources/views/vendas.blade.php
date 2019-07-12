@@ -24,9 +24,9 @@
 			<tr>
 				<th>Index</th>
 				<th>Comprador</th>
-				<th>Custo</th>
 				<th>Preço</th>
-				<th>Lucro</th>
+				<th>Pagamento</th>
+				<th>Parcelas</th>
 				<th>Data</th>
 				<th>Excluir</th>
 			</tr>
@@ -36,11 +36,10 @@
 	    @foreach($compras as $compra)
 	    <tr>		
 	    	<td>{{$compra->id}}</td>
-	    	<td><b>{{ucfirst($compra->cliente)}}<b></td>
-	    	<td >R${{$compra->custo}}</td>			
+	    	<td><b>{{ucfirst($compra->cliente)}}<b></td>			
 	    	<td >R${{$compra->preco}}</td>		
-	    <td> <span>R${{($compra->preco-$compra->custo)}}</span></td>
-
+	    	<td >{{$compra->pagamento}}</td>		
+	    	<td >{{$compra->parcelas}}</td>		
 	    <td><span>{{ date('d/m/Y',strtotime($compra->created_at)) }} </span></td>
 				<td>
 				<button class='btn btn-danger btn-sm' onclick='remove({{$compra->id}})'>	

@@ -17,6 +17,9 @@ use App\Compra;
 use App\Cliente;
 use App\Endereco;
 
+Route::get('/', function(){
+	return redirect('/dashboard');
+});
 
 Route::get('/dashboard','ControleEstoque@dashboardView')->name('pagina.geral');
 Route::post('/dashboard','ControleEstoque@dashboardWithTime')->name('pagina.geral.set');
@@ -54,8 +57,6 @@ Route::post('/editandomodelo/' ,'ControleEstoque@editandoModelo');
 Route::post('/addestoque', 'ControleEstoque@addEstoque');
 Route::post('/rmestoque', 'ControleEstoque@rmEstoque');
 
-
-
 Route::get('/excluircliente/{id}',function($id){
 	if($cliente=Cliente::find($id)){
 		$compras=Compra::where('cliente_id',$id)->get();
@@ -74,4 +75,29 @@ Route::get('/excluirvenda/{id}',function($id){
 	$compra->delete();
 
 	return redirect('/vendas');
+});
+
+Route::get('/vercliente/{id}','ControleEstoque@verCliente');
+
+Route::get('/getmodelo/{id}',function($id){
+	$modelo = Modelo::where('id',$id)->get()->first();
+	$preco=$modelo->preco;
+	$custo=$modelo->custo;
+
+	$dados=['id'=>$id,'preco'=>$preco,'custo'=>$custo];
+
+	return $dados;
+})->name('getmodelo');
+
+Route::post('/calculo','ControleEstoque@calculo')->name('calculo');
+
+
+Route::get('/teste', function(){
+	$get=Cliente::all();
+
+	foreach($get as $cliente){
+		echo $cliente->endereco;
+	}
+
+	return $get->toJson();
 });

@@ -31,10 +31,8 @@ class ControleEstoque extends Controller
             ->whereBetween('created_at',[$date,$date1])
                 ->get();
 
-        $modelos=DB::table('modelos')
-            ->whereBetween('created_at',[$date,$date1])
-                ->get();
-                
+        $modelos=Modelo::all();
+
         return view('visaogeral',compact('compras','modelos','clientes'));
     }
 
@@ -82,18 +80,29 @@ class ControleEstoque extends Controller
 
         $endereco->user_id=$cliente->id;
 
-        $endereco->cep=$request->input('cep');
-        $endereco->uf=$request->input('uf');
-        $endereco->cidade=$request->input('cidade');
-        $endereco->bairro=$request->input('bairro');
-        $endereco->rua=$request->input('rua');
-        $endereco->numero=$request->input('numero');
-
+        if($request->input('cep')!=null && $request->input('cep')) {
+            $endereco->cep=$request->input('cep');
+            $endereco->uf=$request->input('uf');
+            $endereco->cidade=$request->input('cidade');
+            $endereco->bairro=$request->input('bairro');
+            $endereco->rua=$request->input('rua');
+            $endereco->numero=$request->input('numero');
+        }
+        else{
+            $endereco->cep='0';
+            $endereco->uf='0';
+            $endereco->cidade='0';
+            $endereco->bairro='0';
+            $endereco->rua='0';
+            $endereco->numero='0';
+        }
         
         $endereco->save();
 
         return redirect('/clientes');
     }
+
+
 
     public function cadastrarModelo(Request $request){
         $request->validate([
@@ -113,32 +122,47 @@ class ControleEstoque extends Controller
         return redirect("/modelos");
     }
 
+
+
     public function cadastrarCompra(Request $request){
 
-        $cliente_id=    $request->input('cliente');
-        $modelo_id=     $request->input('modelo');
+        $cliente_id=$request->input('cliente');
+    	$cliente= Cliente::find($cliente_id);
+        $ModsId=$request->input('modelo');
+        
+        //dd($ModsId);
+        foreach($ModsId as $id){
+    		$modelo=Modelo::where('id',$id)->get()->first();
 
-    	$cliente=  Cliente::where('id',$cliente_id)->get()->first();
-		$modelo=   Modelo::where('id',$modelo_id)->get()->first();
+            if($modelo->estoque!=0) {
+            $modelo->estoque--;
+            $modelo->save();
+            }
+            
+            /*            
+                $message="O(s) modelo(s) esta indisponível no sistema de estoque!";
+                
+                $compras=Compra::all();
+                return view('/vendas',compact('compras','message'));
+            }*/
+        } 
 
-        if($modelo->estoque==0) {
-            $message="O modelo esta indisponível no estoque";
-            $compras=Compra::all();
-            return view('/vendas',compact('compras','message'));
-        }
+            
+
 		$compra= new Compra();
 
-        $lentes=$request->input('preco');
+        $lentes=    $request->input('preco');
+        $custo=     $request->input('custofinal');
+        $preco=     $request->input('precofinal');
 
 		$compra->cliente=		$cliente->nome;
-		$compra->preco=			$modelo->preco;
-		$compra->custo= 		$modelo->custo;
-		$compra->lucro=			($modelo->preco-$modelo->custo);
+		$compra->preco=			$preco;
+		$compra->custo= 		$custo;
+        $compra->pagamento=     $request->input('pagamento');
+        $compra->parcelas=      $request->input('parcelas');
+		$compra->lucro=			($preco-$custo);
 		$compra->cliente_id=	$cliente->id;
 		$compra->save();
-
-        $modelo->estoque--;
-        $modelo->save();
 
         return redirect("/vendas");
     }
@@ -276,5 +300,26 @@ class ControleEstoque extends Controller
     public function getModelos(){
     	$modelos=Modelo::All();
     	return view('/modelos',compact('modelos'));
+    }
+
+    public function verCliente($id){
+        $cli=Cliente::find($id);
+        return $cli;
+    }
+
+
+    public function calculo(Request $request){
+        $precoTot=0;
+        $custoTot=0;
+        foreach($request->input('modelo') as $id){
+            $modelo=    Modelo::find($id);
+            $preco=     $modelo->preco;
+            $precoTot+= $preco;
+            $custo=     $modelo->custo;
+            $custoTot+= $custo;
+        }
+
+        $dados = ['precoTot'=>$precoTot,'custoTot'=>$custoTot];
+        return $dados;
     }
 }

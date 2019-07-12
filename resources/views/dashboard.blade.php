@@ -11,12 +11,12 @@
 
 
 </head>
-<body>
-<div style='text-align:center;'>
+<body style='text-align: center;'>
+
 
 @component('navbar',['active'=>$active])
 @endcomponent
-
+<br>
 @hasSection("dashboard")
 	@yield('dashboard')
 @endif
@@ -27,19 +27,13 @@
 	</div>
 @endif
 
-<script type="text/javascript" src="js/jquery.mask.js"></script>
+
+
+
+
 <script type="text/javascript">
 	$('input').addClass('form-control');
 	$('.glyphicon-remove').removeClass('glyphicon-remove').addClass('glyphicon-ban-circle');
 </script>
-
-<style type="text/css">
-	body{
-		font-family:calibri;
-	}
-</style>
-
-
-</body>
 
 </html>
