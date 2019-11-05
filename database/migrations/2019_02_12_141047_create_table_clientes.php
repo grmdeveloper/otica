@@ -27,15 +27,15 @@ class CreateTableClientes extends Migration
 
             $table->string('cpf')->nullable();
 
-            $table->string('telefone');
+            $table->string('telefone')->nullable();
             
             $table->string('telefone1')->nullable();
             $table->string('contato1')->nullable();
 
-            $table->string('miop');
-            $table->string('asti');
-            $table->string('hipe');
-            $table->string('pres');
+            $table->string('miop')->nullable();
+            $table->string('asti')->nullable();
+            $table->string('hipe')->nullable();
+            $table->string('pres')->nullable();
             
             $table->string('observacoes')->nullable();
             $table->timestamps();
