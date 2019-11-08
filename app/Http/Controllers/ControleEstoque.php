@@ -77,7 +77,6 @@ class ControleEstoque extends Controller
 
         $endereco = new Endereco();
 
-
         $endereco->user_id=$cliente->id;
 
         if($request->input('cep')!=null && $request->input('cep')) {
@@ -101,7 +100,6 @@ class ControleEstoque extends Controller
 
         return redirect('/clientes');
     }
-
 
 
     public function cadastrarModelo(Request $request){
@@ -138,7 +136,7 @@ class ControleEstoque extends Controller
             $modelo->estoque--;
             $modelo->save();
             }
-            
+
             /*            
                 $message="O(s) modelo(s) esta indisponível no sistema de estoque!";
                 
@@ -146,7 +144,6 @@ class ControleEstoque extends Controller
                 return view('/vendas',compact('compras','message'));
             }*/
         } 
-
             
 
 		$compra= new Compra();
@@ -218,7 +215,7 @@ class ControleEstoque extends Controller
 
         $endereco = Endereco::where('user_id',$request->input('id'))->get()->first();
 
-
+ 
         $endereco->cep=$request->input('cep');
         $endereco->uf=$request->input('uf');
         $endereco->cidade=$request->input('cidade');

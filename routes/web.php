@@ -18,7 +18,6 @@ use App\Cliente;
 use App\Endereco;
 
 
-
 Route::group(['middleware'=>['auth']],function(){
 	
 	Route::get('/', function(){
@@ -109,6 +108,6 @@ Route::group(['middleware'=>['auth']],function(){
 });
 
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home','ControleEstoque@dashboardView')->name('home');

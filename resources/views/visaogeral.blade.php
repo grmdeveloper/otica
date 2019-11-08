@@ -2,7 +2,7 @@
 
 	@section('dashboard')
 	<h2>Dashboard</h2>
-	<div class='alert alert-primary'>Bem vindo de volta</div>
+	<div class='alert alert-primary'>Bem vinda(o) de volta</div>
 
 
 	<div class='w-50 card' style='margin:auto;'>
