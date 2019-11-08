@@ -108,6 +108,6 @@ Route::group(['middleware'=>['auth']],function(){
 });
 
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home','ControleEstoque@dashboardView')->name('home');
