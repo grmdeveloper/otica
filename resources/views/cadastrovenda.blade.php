@@ -9,7 +9,6 @@
 			</span>	
 		@endif
 
-
 	<form class="vendaform" action='cadastrandovenda'  method="post">
 		{{ csrf_field() }}
 
@@ -85,11 +84,21 @@
 				</select>
 			</label>
 
-			<label>
-				desconto
-				<input type="number" name="desconto" class='form-control' value=0>
-			</label>
-			<input type="submit" class='btn btn-success' value='salvar'>
+			<div id='calc-desconto' class='d-flex' style='justify-content: space-around; padding:0 20%;'>				
+				<label>
+					desconto %
+					<input type="number" 
+					name="desconto" 
+					onchange='calcula_desconto()' 
+					class='' value=0 min='0' max='15'>
+				</label>
+
+				<label>
+					Valor com desconto
+					<input type="text" name="preco_desconto" disabled>
+				</label>
+			</div>
+			<input type="submit" class='mt-4 btn btn-success' value='salvar'>
 		</fieldset>	
 	</form>
 
@@ -124,7 +133,6 @@
 		$.ajax({
 			url:get+"/"+id,
 			success:function(data){
-				console.log('.preco'+data.id);
 				$('.preco'+x).val("R$"+data.preco);
 				$('.custo'+x).val("R$"+data.custo);
 			}
@@ -147,8 +155,16 @@
 				$(".parcelas")
 					.attr('disabled',false);
 
+				calcula_desconto();
 			}
 		});
+	}
+
+	var calcula_desconto = function(){
+		let perc = $('input[name=desconto]').val();
+		let preco = $('input[name=precofinal]').val();
+		let precodesconto = preco - preco*(perc/100); 
+		$('input[name=preco_desconto').val("R$ "+precodesconto);
 	}
 
 	var removeitem = function(x){

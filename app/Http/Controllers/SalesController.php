@@ -73,7 +73,7 @@ class SalesController extends Controller
             }
         }
 
-        $preco_final = $preco_final-$desconto;
+        $preco_final = $preco_final - $preco_final*($desconto/100);
         $lucro = $preco_final - $custo_final;
 
         return ['custo'=>$custo_final,'preco'=> $preco_final,'lucro'=> $lucro];
@@ -110,6 +110,10 @@ class SalesController extends Controller
         return view('cadastrovenda',compact('clientes','modelos'));
     }
 
+
+    /*CONSUMIDOS VIA -------
+        @AJAX
+    */
     public function calculo(Request $request){
         $precoTot=0;
         $custoTot=0;
@@ -135,6 +139,9 @@ class SalesController extends Controller
             return response('erro',404);
         }
     }
+    /*CONSUMIDOS VIA  ------
+        @AJAX
+    */
 
 
 }
