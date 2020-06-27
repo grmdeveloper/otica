@@ -110,7 +110,7 @@
 	var remove= function(id){
 		if(confirm('Deseja apagar este modelo? vendas ja cadastradas não serão afetadas.')){
 				$.ajax({
-					url:'api/excluirmodelo/'+id,
+					url:'excluirmodelo/'+id,
 					type:'delete',
 		   			context:this,
 					data: {

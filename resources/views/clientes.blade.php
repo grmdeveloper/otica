@@ -163,8 +163,19 @@
 	var edit = 		function($id){
 		location.href='editarcliente/'+$id;
 	}
-	var remove = 	function($id){
-		location.href='excluircliente/'+$id;
+
+	var remove = function($id){
+		$.ajax({
+
+			type:'delete',
+			url:'/excluircliente/'+$id,
+			dataType: 'json',
+		    data: {
+		          "_token" : '{{csrf_token()}}',
+		    },
+			success:()=> document.location.reload(),
+			error:()=> document.location.reload(),
+		});
 	}
 
 

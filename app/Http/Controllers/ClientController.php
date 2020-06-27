@@ -157,13 +157,15 @@ class ClientController extends Controller
 				$endereco=Endereco::where('user_id',$id)->get()->first();
 				
 				$endereco->delete();
-			
-			if(count($compras)>0)	
-				$compras->each->delete();
-			
-			$cliente->delete();
+    			
+    			if(count($compras)>0){	
+    				$compras->each->delete();
+    			}
 
-		}
-		return redirect('/clientes');
+    			$cliente->delete();
+                return response('ok',202);
+
+
+    		}
    		}
 }

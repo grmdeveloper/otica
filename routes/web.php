@@ -38,7 +38,7 @@ Route::group(['middleware'=>['auth']],function(){
 	Route::post('/editandocliente/','ClientController@editandoCliente')
 	->name('editandocliente');
 	Route::get('/vercliente/{id}','ClientController@verCliente');
-	Route::get('/excluircliente/{id}','ClientController@deleteCliente');
+	Route::delete('/excluircliente/{id}','ClientController@deleteCliente');
 	
 
 	Route::get('/vendas','DashboardController@getVendas')->name('pagina.vendas');
@@ -46,7 +46,7 @@ Route::group(['middleware'=>['auth']],function(){
 	Route::post("/cadastrandovenda" ,'SalesController@cadastrarCompra');
 	Route::get('/editarvenda/{id}','SalesController@editarCompra');
 	Route::post('/editandovenda/' ,'SalesController@editandoCompra');
-	Route::get('/excluirvenda/{id}','SalesController@excluirVenda');
+	Route::delete('/excluirvenda/{id}','SalesController@excluirVenda')->name('excluir.venda');
 	Route::post('/calculo','SalesController@calculo')->name('calculo');
 	
 
@@ -56,8 +56,7 @@ Route::group(['middleware'=>['auth']],function(){
 	Route::post('/editandomodelo/' ,'ModelController@editandoModelo');
 	Route::post('/addestoque', 'ModelController@addEstoque');
 	Route::get('/getmodelo/{id}','ModelController@getModelo')->name('getmodelo');
-
-	
+	Route::delete('/excluirmodelo/{id}','ModelController@excluirModelo');
 
 
 });

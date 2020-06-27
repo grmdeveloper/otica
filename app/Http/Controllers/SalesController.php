@@ -127,12 +127,13 @@ class SalesController extends Controller
 
     public function excluirVenda($id){
         $venda=Compra::find($id);
-        if($venda) :
+        if($venda){
             $venda->delete();
             return response('OK',202);
-        else:
+        }
+        else{
             return response('erro',404);
-        endif;
+        }
     }
 
 

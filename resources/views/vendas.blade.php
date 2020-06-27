@@ -73,7 +73,7 @@
 	var remove= 	function($id){
 		if(confirm("Deseja apagar dados desta venda?")){
 			$.ajax({
-				url:'api/excluirvenda/'+$id,
+				url:'excluirvenda/'+$id,
 				type:'delete',
 				data:{
 					'_token' : $('meta[name="csrf-token"]').attr('content')
