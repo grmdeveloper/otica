@@ -2,7 +2,7 @@
 
 @section('formulario')
 		<h2>Cadastrar Produto</h2>
-	<form class="card modeloform" method='post' @if(isset($modelo)) action='editandomodelo' @else action='cadastrandomodelo' @endif>
+	<form class="card modeloform" method='post' @if(isset($modelo)) action='/editandomodelo' @else action='cadastrandomodelo' @endif>
 		{{ csrf_field() }}
 		<div class="form-group">
 			<fieldset>

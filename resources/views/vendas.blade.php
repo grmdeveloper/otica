@@ -6,33 +6,26 @@
 	<div class='alert alert-warning'>{{$message}}</div>
 @endif	
 
-<link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
-<script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 
 		<h2>Vendas</h2>
-		<br>
-		<div class="card">
-			<span class="badge">?</span> 
-			Basta selecionar o cliente e o modelo desejado para computar a venda. <br> <i>PS: O custo das lentes é ignorado por nosso sistema.</i>
-		</div>
-		<br>
 	
 	<div style='padding:0 30px'>
 		
 		<table id='table' class='table table-striped'>	
 			<thead>
-			<tr>
-				<th>Index</th>
-				<th>Comprador</th>
-				<th>Preço</th>
-				<th>Pagamento</th>
-				<th>Parcelas</th>
-				<th>Data</th>
-				<th>Excluir</th>
-			</tr>
+				<tr>
+					<th>Index</th>
+					<th>Comprador</th>
+					<th>Preço</th>
+					<th>Pagamento</th>
+					<th>Parcelas</th>
+					<th>Data</th>
+					<th>Excluir</th>
+				</tr>
 			</thead>
-			<tbody>
-				
+		
+
+		<tbody>	
 	    @foreach($compras as $compra)
 	    <tr>		
 	    	<td>{{$compra->id}}</td>
@@ -53,12 +46,18 @@
 			</tbody>
 		</table>
 		<br><br>
+		
 		<span>
 			<a href="{{route('cad.venda')}}" class='btn btn-success btn-group' style='font-size:12pt;'>Cadastrar nova venda</a>
 		</span>
 		
-		<span class='btn btn-primary btn-group' onclick='salvaPlanilha()'>Salvar Planilha</span>
+		@if(count($compras) > 0)
+		<span class='btn btn-primary btn-group' onclick='salvaPlanilha()'>
+			Salvar Planilha
+		</span>
+		@endif
 
+		<!-- HIDDEN CONFIRM CARD-->
 		<span class="confirmRequest card shadow-sm" style='display:none; position:absolute; top:35vh; left:30vw; padding:50px;'>
 			
 		</span>

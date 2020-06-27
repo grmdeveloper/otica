@@ -1,7 +1,7 @@
 	<nav id='navbar' class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand rounded" style='background-color:rgba(255,255,255,.9)'>
    <!--  <img src="{{asset('images/logo.png')}}" width='100'> -->
-   <span style='padding:15px;' >Ótica <b>Rose</b></span>
+   <span style='padding:15px;' >Ótica</span>
   </a>
 
   <div class=" navbar-collapse">
@@ -18,21 +18,19 @@
       <li class="nav-item @if($active=='vendas') active @endif ">
         <a class="nav-link" href="{{route('pagina.vendas')}}">Vendas</a>
       </li>
-      <
+
+  
+    <li class='ml-2'>
+      <a href="{{ route('logout') }}" style="color:grey; text-transform:none; text-decoration: none;"
+          onclick="event.preventDefault();
+                  document.getElementById('logout-form').submit();">
+          Logout
+      </a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+          {{ csrf_field() }}
+      </form>
+    </li>
+
+</ul>
   </div>
-
-  <ul><li>
-    <a href="{{ route('logout') }}" style="color:grey; text-transform:none; text-decoration: none;"
-        onclick="event.preventDefault();
-                document.getElementById('logout-form').submit();">
-        Logout
-    </a>
-
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        {{ csrf_field() }}
-    </form>
-
-
-
-  </li></ul>
 </nav>

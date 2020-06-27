@@ -78,10 +78,11 @@
 		Cadastrar novo modelo
 	</a>
 	
-	<a class='btn btn-primary' style='font-size:12pt; color:white;' onclick='salvaPlanilha()'>
-		Salvar Planilha
-	</a>
-
+	@if(count($modelos) > 0)
+		<a class='btn btn-primary' style='font-size:12pt; color:white;' onclick='salvaPlanilha()'>
+			Salvar Planilha
+		</a>
+	@endif
 
 	<span class="confirmRequest card shadow-sm" style='display:none; position:absolute; top:35vh; left:30vw; padding:50px;'>
 		Deseja apagar este modelo? Vendas já cadastradas não serão afetadas 

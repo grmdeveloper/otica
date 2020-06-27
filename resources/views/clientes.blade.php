@@ -94,15 +94,18 @@
 	<span style='padding:20px'>
 		<a href="{{route('cad.cliente')}}" class='btn btn-success'style='font-size:12pt;'>Cadastrar novo cliente</a>
 	</span>
+
+	@if(count($clientes) > 0)
 	<span style='padding:20px' onclick='salvaPlanilha()'>
 		<a class='btn btn-primary'style='font-size:12pt; color:white;'>Salvar Planilha</a>
 	</span>
+	@endif
 
 	<span class="confirmRequest card shadow-sm" style='display:none; position:absolute; top:35vh; left:27vw; padding:50px;'>
 		
 	</span>
 
-<div class='cliente-view card w-50 shadow-sm' style='margin:20px auto; font-size:12pt; font-family:vedana;'>
+<div class='cliente-view card w-50 shadow-sm' style='display:none; margin:20px auto; font-size:12pt; font-family:vedana;'>
 </div>
 <div class='cliente-data card w-50 shadow-sm' style='margin:20px auto; font-size:12pt; font-family:vedana;'>
 </div>
@@ -126,26 +129,29 @@
 				
 				dados+="<hr>";
 				dados+="<br>nada consta: "+data.nd_consta;
-				dados+="<br><br><br>tso: "+data.tso;
+				dados+="<br><br>tso: "+data.tso;
 				dados+="<br>data: "+data.tso_date;
 				
 				dados+="<hr>";
-				dados+="<br><br><br>telefone: "+data.telefone;
+				dados+="<br>telefone: "+data.telefone;
 				
 				dados+="<hr>";
-				dados+="<br><br><br>rg: "+data.rg;
+				dados+="<br>rg: "+data.rg;
 				dados+="<br>orgao emissor: "+data.orgao;
 				dados+="<br>cpf: "+data.cpf;
 				
 				dados+="<hr>";
-				dados+="<br><br>telefone parente: "+data.telefone1;
+				dados+="<br>telefone parente: "+data.telefone1;
 				dados+="<br>nome: "+data.contato1;
 				
 				dados+="<hr>";
 				dados+="<br><br>observacoes: "+data.observacoes;
 				dados+="<hr>";
 
-				$('.cliente-view').html(dados);
+				$('.cliente-view')
+					.fadeIn()
+					.html(dados);
+
 				$('.cliente-data').html(data.created_at);
 
 				$('body, html').animate({

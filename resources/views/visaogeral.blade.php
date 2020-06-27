@@ -1,13 +1,13 @@
 @extends('dashboard',['titulo'=>'Dashboard','active'=>'visaoGeral'])
 
 	@section('dashboard')
+	<div class='alert alert-primary'>Bem vindo(a) de volta {{Auth::User()->name}}</div>
 	<h2>Dashboard</h2>
-	<div class='alert alert-primary'>Bem vinda(o) de volta</div>
 
-
-	<div class='w-50 card' style='margin:auto;'>
+	<div class='card' id='dados-primarios' style='margin:auto;'>
 			@if(count($modelos)>0)
-			<span class="card">Produtos em estoque
+			<div class='d-inline-flex' style='justify-content:space-around; padding:0 20%;'>
+			<span class="card" style='flex-grow:2'>Produtos em estoque
 				<b class="badge badge-warning">
 					@foreach($modelos as $md)
 					<?php 
@@ -18,7 +18,7 @@
 					{{$estoque}}
 				</b>
 			</span>
-			<span class="card">Faturamento esperado
+			<span class="card" style='flex-grow:2'>Faturamento esperado
 				<b class="badge badge-warning">
 					@foreach($modelos as $md)
 					<?php 
@@ -29,7 +29,7 @@
 					R${{$ft0}}
 				</b>
 			</span>		
-			<span class="card">Lucro esperado
+			<span class="card" style='flex-grow:2'>Lucro esperado
 				<b class="badge badge-warning">
 					@foreach($modelos as $md)
 					<?php 
@@ -40,6 +40,7 @@
 					R${{$lc0}}
 				</b>
 			</span>
+			</div>
 		@endif
 	</div>
 
@@ -52,12 +53,12 @@
 			{{ csrf_field() }}
 			<label>
 				inicio
-				<input type="date" name="data" class='form-control'>
+				<input type="date" name="data" class='form-control' required>
 			</label>
 
 			<label>
 				fim
-				<input type="date" name="data1" class='form-control'>
+				<input type="date" name="data1" class='form-control' required>
 			</label>
 
 			<input type="hidden" name="_method" value="post">
@@ -66,16 +67,24 @@
 
 
 	@if(count($compras)==0 && count($modelos)==0 && count($clientes)==0)
-	<h2>Nenhum dado disponivel</h2>
+		
+		<div class='card'>
+			<div class="card-header">
+				<h2>Nenhum dado disponivel</h2>
+			</div>
+			<div class="card-body">
+				<span class="badge">?</span> primeiros passos <br>
+				<ol style='list-style:upper-roman;'>
+					<small>
+					<li>Cadastre os modelos de armações na sessão <a href="/modelos">Modelos</a></li>
+					<li>Cadastre seus clientes na sessão <a href="/clientes">Clientes</a></li>
+					</small>
+				</ol>
+			</div>
+		</div>
 
-
-			<span class="badge">?</span> primeiros passos <br>
-			<ol style='list-style:upper-roman;'>
-				<li>Cadastre os modelos de armações na sessão <a href="/modelos">Modelos</a></li>
-				<li>Cadastre seus clientes na sessão <a href="/clientes">Clientes</a></li>
-				<li>Compute as vendas na sessão <a href="/vendas">Vendas</a></li>
-			</ol>
 	@else
+
 
 		@if(count($clientes)>0)
 			<hr>
@@ -124,23 +133,5 @@
 
 	</div>
 
-	<br>
-	<a href="{{route('cad.modelo')}}" class='btn btn-primary'>Cadastrar Modelo</a>
-	
-	<a href="{{route('cad.cliente')}}" class='btn btn-primary'>Cadastrar Cliente</a>
 
-	<a href="{{route('cad.venda')}}" class='btn btn-primary'
-	@if(count($clientes)==0 || count($modelos)==0) 	disabled	@endif
-	>Cadastrar Venda</a>
-
-	<br><br><br>
-
-	<style type="text/css">
-		.card{
-			font-size:12pt;
-		}
-		.badge{
-			font-size:12pt;
-		}
-	</style>
 	@endSection
